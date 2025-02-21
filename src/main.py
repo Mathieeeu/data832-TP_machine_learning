@@ -177,12 +177,12 @@ if __name__ == '__main__':
 
     data = load_data(filename)
     features = mean_and_variance_for_each_feature(data)
-    #correlation_matrix(data)
+    correlation_matrix(data)
 
-    # # plot_data(data)
-    # plot_feature(data, feature='gdpp', nb_countries=10, ascending=False)
-    # plot_feature(data, feature='child_mort', nb_countries=10, ascending=True)
-    # plot_feature(data, feature='income', nb_countries=10, ascending=False)
+    # plot_data(data)
+    plot_feature(data, feature='gdpp', nb_countries=10, ascending=False)
+    plot_feature(data, feature='child_mort', nb_countries=10, ascending=True)
+    plot_feature(data, feature='income', nb_countries=10, ascending=False)
     
     
     clustered_data = pipeline(data)
@@ -190,11 +190,12 @@ if __name__ == '__main__':
 
     scaler, nb_components = best_hyperparamaters(data)
     best_clustered_data = pipeline(data, scaler=scaler, n_components=nb_components)
+    print((scaler,nb_components))
 
-    # plotage des visualisations 
-    plot_data_on_a_graph_with_the_axes_being_the_two_components_of_the_PCA_and_the_color_being_the_cluster(data)
-    plot_la_valeur_de_chaque_variable_pour_chaque_classe(data)
-    plot_cluster_label_on_a_map_of_the_Earth(best_clustered_data)
+    # plotage des visualisations (un peu de triche sur les couleurs pour que ce soit plus clair (ne marche qu'avec la seed 42))
+    plot_data_on_a_graph_with_the_axes_being_the_two_components_of_the_PCA_and_the_color_being_the_cluster(data, colors=['#aad0ff', '#ff9a95', '#beffc1'])
+    plot_la_valeur_de_chaque_variable_pour_chaque_classe(data, colors=['#beffc1', '#ff9a95', '#aad0ff'])
+    plot_cluster_label_on_a_map_of_the_Earth(best_clustered_data, colors={0: '#aad0ff', 1: '#ff9a95', 2: '#beffc1', -1: '#aaaaaa'})
 
     # for row in clustered_data.iterrows():
     #     print(row[1]['country'], row[1]['cluster'])
